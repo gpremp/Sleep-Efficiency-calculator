@@ -18,6 +18,8 @@ app.use(cors());
 // routes
 app.use("/api/users", userRoutes);
 app.use("/api/sleep-data",sleepDataRoutes);
-
+app.get('/',(req,res)=>{
+    res.send("App is working properly")
+})
 const port = process.env.PORT || 8080;
 app.listen(port, console.log(`Listening on port ${port}...`));
