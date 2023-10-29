@@ -19,6 +19,9 @@
     "mongoose": "^7.3.4",
     "nodemon": "^3.0.1"
   },
+  "engines": {
+    "node": ">=18.18.0"
+  },
   "exports": {
     "aliases": {
       "@/*": "./src/*"
