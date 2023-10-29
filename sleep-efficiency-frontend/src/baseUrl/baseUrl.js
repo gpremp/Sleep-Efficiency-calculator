@@ -1,2 +1,2 @@
-const baseUrl = "http://localhost:8080";
+const baseUrl = "https://sleep-efficiency-caculator.onrender.com";
 export default baseUrl
