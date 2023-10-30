@@ -4,11 +4,6 @@
   box-sizing: border-box;
 }
 
-/* body{
-  align-items: center;
-  justify-content: center;    
-} */
-
 .card {
   background-color: white;
   border-radius: 15px;

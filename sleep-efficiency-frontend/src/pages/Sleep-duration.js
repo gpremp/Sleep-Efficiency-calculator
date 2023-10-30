@@ -7,16 +7,16 @@ import baseUrl from "../baseUrl/baseUrl";
 import Navbar from "../components/navbar/navbar";
 import { LogOut } from "../auth/loginAuth";
 
-let arr = [1,2,3,4,5,6,7,8,9,10]
+let hourArray = [1,2,3,4,5,6,7,8,9,10]
 function SleepDuration() {
   const location = useLocation();
   const navigate = useNavigate();
   const prevSleppData = location.state?.sleepdata || null
 
   const [sleepData, setSleepData] = useState(prevSleppData);
-  const [selectedduration, setSelectedDuration] = useState(arr[0]);
+  const [selectedduration, setSelectedDuration] = useState(hourArray[0]);
 
-  const changeQuestion = () => {
+  const submitSleepData = () => {
     let user = currentUserDetail();
       axios
         .post(`${baseUrl}/api/sleep-data`, sleepData, {
@@ -30,11 +30,11 @@ function SleepDuration() {
             LogOut();
             navigate("/")
            }
-          Swal.fire("Success!", "Sleep Data saved successfully!", "success");
           navigate('/sleep/result')
         })
         .catch((err) => {
           console.log(err);
+          Swal.fire("Sorry!", "Something Went Worng", "error");
         });
   };
   
@@ -69,9 +69,9 @@ function SleepDuration() {
           onChange={(e) => onSelectStock(e.target.value)}
           value={selectedduration}
         >
-          {arr.map((hr) => (
-            <option key={hr} value={hr}>
-              {hr} hours
+          {hourArray.map((hour) => (
+            <option key={hour} value={hour}>
+              {hour} hours
             </option>
           ))}
         </select>
@@ -79,7 +79,7 @@ function SleepDuration() {
             type="button"
             value="Next"
             className="btn btn-info"
-            onClick={changeQuestion}
+            onClick={submitSleepData}
           />
         </div>
       </div>

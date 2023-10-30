@@ -7,7 +7,6 @@ import baseUrl from "../baseUrl/baseUrl";
 import Swal from "sweetalert2";
 import Navbar from "../components/navbar/navbar";
 
-let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 function SleepResult() {
   const navigate = useNavigate();
   const [sleepData, setSleepData] = useState({});
