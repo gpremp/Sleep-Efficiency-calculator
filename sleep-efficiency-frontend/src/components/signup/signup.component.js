@@ -10,6 +10,7 @@ export default function Signup({ toggleLogin }) {
   const formRef = useRef(null);
   const [user, setUser] = useState({});
   const [formErrors, setFormErrors] = useState({});
+  const [isSignup, setSignup] = useState(false);
   let isSubmit = true;
 
   function isSentenceValid(sentence) {
@@ -32,9 +33,11 @@ export default function Signup({ toggleLogin }) {
     isSubmit = true;
     setFormErrors(validate(user));
     if (isSubmit) {
+      setSignup(true);
       axios
         .post(`${baseUrl}/api/users`, user)
         .then((res) => {
+          setSignup(false);
           if (res.data.message == "User Name Already exits") {
             Swal.fire("Sorry!", res.data.message, "error");
           } else {
@@ -44,6 +47,7 @@ export default function Signup({ toggleLogin }) {
           }
         })
         .catch((err) => {
+          setSignup(false);
           console.log(err);
           Swal.fire("Sorry!", "Something Went Worng", "error");
         });
@@ -122,6 +126,11 @@ export default function Signup({ toggleLogin }) {
                     Signup
                   </button>
                 </form>
+                {isSignup ? (
+                  <h4 style={{ color: "red" }}>Please wait...</h4>
+                ) : (
+                  <p></p>
+                )}
                 <p className="text-center">
                   Already have an Account{" "}
                   <span style={buttonStyle} onClick={handleChange}>

@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 export default function Login({ toggleLogin }) {
   const navigate = useNavigate();
   const [user, setUser] = useState({});
+  const [isLoging, setIsLoging] = useState(false);
 
   const [formErrors, setFormErrors] = useState("");
   function handleChange() {
@@ -23,6 +24,7 @@ export default function Login({ toggleLogin }) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setFormErrors("");
+    setIsLoging(true);
     await axios
       .post(`${baseUrl}/api/users/auth`, user)
       .then((response) => {
@@ -32,6 +34,7 @@ export default function Login({ toggleLogin }) {
           doLogin(response.data.user);
           navigate("/sleep/questions");
         }
+        setIsLoging(false);
       })
       .catch((err) => {
         console.log(err);
@@ -79,6 +82,11 @@ export default function Login({ toggleLogin }) {
                   Login
                 </button>
               </form>
+              {isLoging ? (
+                <h4 style={{ color: "red" }}>Please wait...</h4>
+              ) : (
+                <p></p>
+              )}
               <p className="text-center">
                 Don't have an account{" "}
                 <span style={buttonStyle} onClick={handleChange}>
