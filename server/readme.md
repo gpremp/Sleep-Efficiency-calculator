@@ -1,11 +1,11 @@
 ## Steps to run Server
 
-create a database in mongodb with database name "sleep-info-database"
+You will need to create a database in MongoDB called `sleep-info-database`
 
-provide the mongodb database connection string in .env file in root folder of server with key name "DB"
+The MongoDB database connection string should be provided in the .env file in the root of the server under the key name `DB`
 
-run "npm install" command to install all dependencies in server
+To install all dependencies on the server, run the `npm install` command
 
-To run the node.js server by command "npm start"
+Start the node.js server with the command `npm start`
 
 [live link to project](https://sleep-efficiency.vercel.app/)
