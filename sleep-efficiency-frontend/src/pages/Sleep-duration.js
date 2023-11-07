@@ -16,33 +16,37 @@ function SleepDuration() {
   const [sleepData, setSleepData] = useState(prevSleppData);
   const [selectedduration, setSelectedDuration] = useState(hourArray[0]);
   const [isSubmitSleepData, setisSubmitSleepData] = useState(false);
+  const [error, setError] = useState(true);
 
   const submitSleepData = () => {
-    setisSubmitSleepData(true);
-    let user = currentUserDetail();
-    axios
-      .post(`${baseUrl}/api/sleep-data`, sleepData, {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      })
-      .then((res) => {
-        setisSubmitSleepData(false);
-        if (res.data.message === "Token is not valid") {
-          Swal.fire("Sorry!", "Please Login Again", "error");
-          LogOut();
-          navigate("/");
-        }
-        navigate("/sleep/result");
-      })
-      .catch((err) => {
-        setisSubmitSleepData(false);
-        console.log(err);
-        Swal.fire("Sorry!", "Something Went Worng", "error");
-      });
+    if (!error) {
+      setisSubmitSleepData(true);
+      let user = currentUserDetail();
+      axios
+        .post(`${baseUrl}/api/sleep-data`, sleepData, {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        })
+        .then((res) => {
+          setisSubmitSleepData(false);
+          if (res.data.message === "Token is not valid") {
+            Swal.fire("Sorry!", "Please Login Again", "error");
+            LogOut();
+            navigate("/");
+          }
+          navigate("/sleep/result");
+        })
+        .catch((err) => {
+          setisSubmitSleepData(false);
+          console.log(err);
+          Swal.fire("Sorry!", "Something Went Worng", "error");
+        });
+    }
   };
 
-  const onSelectStock = (value) => {
+  const onSelectTime = (value) => {
+    setError(false);
     setSelectedDuration(value);
     setSleepData((prevData) => ({ ...prevData, SleepDuration: value }));
   };
@@ -72,7 +76,7 @@ function SleepDuration() {
                 </div>
                 <select
                   className="form-select my-3"
-                  onChange={(e) => onSelectStock(e.target.value)}
+                  onChange={(e) => onSelectTime(e.target.value)}
                   value={selectedduration}
                 >
                   {hourArray.map((hour) => (
@@ -81,6 +85,11 @@ function SleepDuration() {
                     </option>
                   ))}
                 </select>
+                {error ? (
+                  <h6 style={{ color: "red" }}>Please select sleep duration</h6>
+                ) : (
+                  <></>
+                )}
                 <input
                   type="button"
                   value="Next"

@@ -25,17 +25,25 @@ function SleepQuestions() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [clickedOption, setClickedOption] = useState(10);
   const [sleepData, setSleepData] = useState(new SleepData());
+  const [error, setError] = useState(false);
   const navigate = useNavigate();
 
   const changeQuestion = () => {
-    if (currentQuestion < SleepQues.length - 1) {
+    if (sleepData.sleepGoal === "") {
+      setError(true);
+    } else if (currentQuestion < SleepQues.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
       setClickedOption(10);
     } else {
-      navigate("/sleep/time", { state: { sleepdata: sleepData } });
+      if (sleepData.SleepStruggleDuration === "") {
+        setError(true);
+      } else {
+        navigate("/sleep/time", { state: { sleepdata: sleepData } });
+      }
     }
   };
   const handleChange = (e) => {
+    setError(false);
     if (currentQuestion === 0) {
       setSleepData((prevData) => ({ ...prevData, sleepGoal: e.target.value }));
     } else if (currentQuestion === 1) {
@@ -87,6 +95,11 @@ function SleepQuestions() {
                     );
                   })}
                 </div>
+                {error ? (
+                  <h6 style={{ color: "red" }}>Please select any option</h6>
+                ) : (
+                  <></>
+                )}
                 <input
                   type="button"
                   value="Next"
